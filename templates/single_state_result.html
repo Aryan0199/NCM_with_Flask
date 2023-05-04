@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Your NCMs </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body style="background-color: #000942;">
+    <div class="header2">
+        <div class="top-nav">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">OUR WORK</a></li>
+                <li><a href="#">WHAT WE DO</a></li>
+                <li><a href="#">ABOUT US</a></li>
+            </ul>
+            <button>Contact Us</button>
+        </div>
+        <div class="side-nav">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" class="logo" >
+            <a href="#">Version 1.1.2</a>
+        </div>
+    <div class="result2">
+    <p id="state">For state:{{result.keys()}}</p>
+    <p>{{result}}</p>
+    </div>
+</div>
+</body>
+</html>
