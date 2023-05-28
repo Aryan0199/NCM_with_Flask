@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Your NCMs </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+  <body style="background-color: #000942;">
+    <div class="header">
+      <div class="top-nav">
+          <ul>
+              <li><a href="http://127.0.0.1:5000/">HOME</a></li>
+              <li><a href="#">OUR WORK</a></li>
+              <li><a href="#">WHAT WE DO</a></li>
+              <li><a href="#">ABOUT US</a></li>
+          </ul>
+          <button>Contact Us</button>
+      </div>
+      <div class="side-nav">
+          <img src="{{ url_for('static', filename='images/logo.jpg') }}" class="logo" >
+          <a href="#">Version 1.1.2</a>
+      </div>
+
+    <div class="neu-form">
+
+    
+    <h1>Input Neutrosophic Matrix</h1>
+  
+    <form action="/nodes" method="post" >
+      <label for="nodes">Enter the number of nodes:</label><br/>
+      <input type="text" name="nodes" id="nodes"  class="neutro-input" />
+      <button type="button" id="field-btn" onclick="addFields()">Add Nodes</button>
+      <div id="field_container">
+        </div>
+      <label for="cncpt">Enter the Concepts</label><br/>
+      <input type="text" name="cncpt" id="cncpt"  class="neutro-input" />
+      <input type="submit" value="Submit" id="sbmt-btn" />
+      <style>
+        #sbmt-btn{
+          display: none;
+        }
+      </style>
+    </form>
+  </div>
+  </div>
+    <script>
+      
+      function addFields() {
+          var sbmtBtn=document.getElementById("sbmt-btn");
+          sbmtBtn.style.display = "block";
+          var numFields = document.getElementById("nodes").value;
+          var container = document.getElementById("field_container");
+          container.innerHTML = "";
+
+          for (var i = 0; i < numFields; i++) {
+              var input = document.createElement("input");
+              input.type = "text";
+              input.name = "field_" + (i + 1);
+              input.placeholder="Enter the elements of row-"+(i+1); 
+              input.classList.add("input-matrix")
+              container.appendChild(input);
+              container.appendChild(document.createElement("br"));
+              
+          }
+      }
+  </script>
+  </body>
+</html>

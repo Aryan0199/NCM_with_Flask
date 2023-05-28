@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<meta name="viewport"™ content="width=device-width, initial-scale=1.0">
+<title>NCMPy:: Select Input</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+<!-- <link rel="stylesheet" href="style.css"> -->
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins"> -->
+</head>
+
+<body>
+    <div class="header">
+        <div class="top-nav">
+            <ul>
+                <li><a href="http://127.0.0.1:5000/">HOME</a></li>
+                <li><a href="#">OUR WORK</a></li>
+                <li><a href="#">WHAT WE DO</a></li>
+                <li><a href="#">ABOUT US</a></li>
+            </ul>
+            <button>Contact Us</button>
+        </div>
+        <div class="side-nav">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" class="logo" >
+            <a href="#">Version 1.1.2</a>
+        </div>
+        <div class="input-form">
+            <form action="#">
+                <div class="input-form-label">
+                    How would you like to give input?
+                </div>
+                <div class="input-b1">
+                    <a href="{{ url_for('inputNeu') }}" >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Neutrosophic Matrix</a>
+
+                </div>
+                
+                <div class="input-b2">
+                    <a href="{{ url_for('inputLt') }}" >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Linguistic Terms</a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</body>
+</html>

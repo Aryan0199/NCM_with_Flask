@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Your NCMs </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+</head>
+<body style="background-color: #000942;">
+    
+    <div class="header2">
+        <div class="top-nav">
+            <ul>
+                <li><a href="http://127.0.0.1:5000/">HOME</a></li>
+                <li><a href="#">OUR WORK</a></li>
+                <li><a href="#">WHAT WE DO</a></li>
+                <li><a href="#">ABOUT US</a></li>
+            </ul>
+            <button>Contact Us</button>
+        </div>
+        <div class="side-nav">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" class="logo" >
+            <a href="#">Version 1.1.2</a>
+        </div>
+    <div class="neu-mat">
+    <p class="sub-headings">Neutrosophic Matrix: </p>
+    <!-- {%print(result[0])%} -->
+    <table>
+      {% for row in result[0] %}
+          <tr>
+              {% for elem in row %}
+                  <td>{{elem}}&nbsp;&nbsp;</td>
+              {% endfor %}
+          </tr>
+      {% endfor %}
+  </table>
+</div>
+
+  <p class="sub-headings">Neutrosophic Graph:</p>
+  <img src="{{ result[2] }}" alt="Neutrosophic graph"><br>
+
+  <p class="sub-headings">Result: </p>
+  <div class="result">
+  {% for i in result[1] %}
+      <p id="state">FOR ACTIVE STATE {{loop.index}} </p>
+      <p>{{ i }} <br><br></p>
+  {% endfor %}
+</div>
+</div>
+</body>
+</html>
