@@ -39,10 +39,13 @@
         
           <p class="sub-headings">Result: </p>
           <div class="result">
-          {% for i in result[2] %}
-              <p id="state">FOR ACTIVE STATE {{loop.index}} </p>
-              <p>{{ i }} <br><br></p>
-          {% endfor %}
+            <ul>
+                {% for key, value in result[2].items() %}
+                <p id="state">FOR ACTIVE STATE {{loop.index}} </p>
+                    <li>{{ key }}</li>
+                    <li>{{ value }}</li>
+                {% endfor %}
+            </ul>
         </div>
         </div>
 </div>

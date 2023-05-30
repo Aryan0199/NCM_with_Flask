@@ -169,7 +169,7 @@ def my_form_post2():
     # print("Numpy array is: ")
     # print(v1)
     t.append(temp)
-    print(t)
+    # print(t)
     matrix = sym.Matrix()
 
   row=[]
@@ -221,7 +221,7 @@ def my_form_post2():
         continue
       i=float(i)
     row.append(temp)
-    print(row)
+    # print(row)
   
   for i in range(0,numOfNodes):
     matrix = matrix.row_insert(i,Matrix([row[i]]))
@@ -330,10 +330,17 @@ def  generate_result():
     return render_template('errorpage.html')
 
   elif state != 0:
-    AE = iteration(E , state, threshold_value )
-    # result=
-    print("AE==")
-    print(AE)
+    table2={}
+    res = iteration(E , state, threshold_value )
+    if(res[1]==0):
+        table2["Fix-point: "]=res[0][-1]
+        print("Fix-point:")
+        print(res[0][-1])
+    else:
+        table2["Limit Cycle: "]=res[0]
+        print("Limit Cycle")
+        print(res[0])
+    # table.append(res[0])
      # create an empty list to store the rows of the matrix
     rows2 = []
     
@@ -350,21 +357,29 @@ def  generate_result():
         # add the row list to the rows list
         rows2.append(row2)
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'graph.png')
-    table2=[]
-    table2.append(AE)
+    
+    # table2.append(res[0])
     print("table2")
     print(table2)
     data=[rows2,full_filename,table2]
     return render_template('single_state_result.html',result=data)
 
   else :
-    table = []
+    table = {}
 
     for x in range(1 , (np.shape(E)[1]) +1 ) : 
+      cnt=0
       print("FOR ACTIVE STATE " , x)
-      AE = iteration(E , x , threshold_value)
-      print(AE)  
-      table.append(AE)
+      res = iteration(E , x, threshold_value )
+      # cnt=cnt+1
+      if(res[1]==0):
+        table["Fix-point{}: ".format(x)]=res[0][-1]
+        print("Fix-point:")
+        print(res[0][-1])
+      else:
+        table["Limit Cycle{}: ".format(x)]=res[0]
+        print("Limit Cycle")
+        print(res[0])
 
     print("FULL TABLE")
     print(table)
@@ -403,7 +418,8 @@ def  generate_result():
     b : a 1D vector array
 """
 
-def check_cycle(b) : 
+def check_cycle(b,E,tval) : 
+  res=[]
   for i in range(len(b) - 1) : 
     for j in range(i + 1 , len(b)) : 
       
@@ -411,10 +427,18 @@ def check_cycle(b) :
       v2 = b[j]
   
       if(compare(v1 , v2) == True) :
-        return True
+        tv1=multiply(v1,E)
+        tv1=thresholdAndUpdate(tv1,tval)
+      
+        if(tv1==v1):
+          res=[True,0]
+          return res # 0 means there is a fix point 
+        else:
+          res=[True,1]
+          return res
         
-  return False
-
+  res=[False,0]     
+  return res
 
 """
   Comparing whether two state vectors are equal or not.
@@ -607,7 +631,7 @@ def iteration(E , state, threshold_value = 1) :
   flag = False
   start = start.T
   vectors = []
-
+  fix_point=0
   while flag == False :
     y = multiply(start , E)
     
@@ -620,9 +644,12 @@ def iteration(E , state, threshold_value = 1) :
     start = y
 
     # Checking for cycle among state vectors
-    flag = check_cycle(vectors)
+    res = check_cycle(vectors,E,threshold_value)
+    flag=res[0]
+    fix_point=res[1]
 
-  return vectors
+
+  return [vectors,fix_point]
 
 """
   A function
@@ -682,17 +709,27 @@ def startE() :
     print("INVALID STATE ENTERED")
 
   elif state != 0:
-    AE = iteration(E , state, threshold_value )
-    print(AE)
+    res = iteration(E , state, threshold_value )
+    if(res[1]==0):
+      print("Fix-point:")
+      print(res[0][-1])
+    else:
+      print("Limit Cycle:")
+      print(res[0])
 
   else :
     table = []
 
     for x in range(1 , (np.shape(E)[1]) +1 ) : 
       print("FOR ACTIVE STATE " , x)
-      AE = iteration(E , x , threshold_value)
-      print(AE)  
-      table.append(AE)
+      res = iteration(E , x, threshold_value )
+      if(res[1]==0):
+        print("Fix-point:")
+        print(res[0][-1])
+      else:
+        print("Limit Cycle")
+        print(res[0])
+      table.append(res[0])
 
     print("FULL TABLE")
     print(table)
@@ -755,17 +792,28 @@ def startL():
     print("INVALID STATE ENTERED")
 
   elif state != 0:
-    AE = iteration(E , state, threshold_value )
-    print(AE)
+    res = iteration(E , state, threshold_value )
+    if(res[1]==0):
+      print("Fix-point:")
+      print(res[0][-1])
+    else:
+      print("Limit Cycle:")
+      print(res[0][0])
+
 
   else :
     table = []
 
     for x in range(1 , (np.shape(E)[1]) +1 ) : 
       print("FOR ACTIVE STATE " , x)
-      AE = iteration(E , x , threshold_value)
-      print(AE)  
-      table.append(AE)
+      res = iteration(E , x, threshold_value )
+      if(res[1]==0):
+        print("Fix-point:")
+        print(res[0][-1])
+      else:
+        print("Limit Cycle")
+        print(res[0][0])
+      table.append(res[0])
 
     print("FULL TABLE")
     print(table)

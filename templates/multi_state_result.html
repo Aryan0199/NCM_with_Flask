@@ -40,10 +40,18 @@
 
   <p class="sub-headings">Result: </p>
   <div class="result">
-  {% for i in result[1] %}
-      <p id="state">FOR ACTIVE STATE {{loop.index}} </p>
-      <p>{{ i }} <br><br></p>
-  {% endfor %}
+    <ul>
+        {% for key, value in result[1].items() %}
+        <p id="state">FOR ACTIVE STATE {{loop.index}} </p>
+             {%if key.startswith('F')%}
+                  <li>Fix-Point:</li>
+                  <li>{{ value }}</li>
+             {% else %}
+                  <li>Limit-Cycle:</li>
+                  <li>{{ value }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
 </div>
 </div>
 </body>
